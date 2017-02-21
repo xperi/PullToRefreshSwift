@@ -42,6 +42,8 @@ public class PullToRefreshView: UIView {
         }
     }
     
+    var enable: Bool = true
+    
     // MARK: UIView
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -61,7 +63,7 @@ public class PullToRefreshView: UIView {
         self.backgroundView.autoresizingMask = UIViewAutoresizing.FlexibleWidth
         self.addSubview(backgroundView)
         
-        self.arrow = UIImageView(frame: CGRectMake(0, 0, 30, 30))
+        self.arrow = UIImageView(frame: CGRect(x: 0, y: 0, width: 30, height: 30))
         self.arrow.autoresizingMask = [.FlexibleLeftMargin, .FlexibleRightMargin]
         
         self.arrow.image = UIImage(named: PullToRefreshConst.imageName, inBundle: NSBundle(forClass: self.dynamicType), compatibleWithTraitCollection: nil)
@@ -103,7 +105,7 @@ public class PullToRefreshView: UIView {
     public override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<()>) {
         
         if (context == &kvoContext && keyPath == contentOffsetKeyPath) {
-            if let scrollView = object as? UIScrollView {
+            if let scrollView = object as? UIScrollView where enable {
                 
                 // Debug
                 //println(scrollView.contentOffset.y)
@@ -113,7 +115,7 @@ public class PullToRefreshView: UIView {
                 // Update the content inset for fixed section headers
                 if self.options.fixedSectionHeader && self.state == .Refreshing {
                     if (scrollView.contentOffset.y > 0) {
-                        scrollView.contentInset = UIEdgeInsetsZero;
+                        scrollView.contentInset = UIEdgeInsetsZero
                     }
                     return
                 }

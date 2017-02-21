@@ -35,6 +35,10 @@ public extension UIScrollView {
         pullToRefreshView?.state = .Normal
     }
     
+    public func enablePullRefresh(enable: Bool) {
+        pullToRefreshView?.enable = enable
+    }
+    
     // If you want to PullToRefreshView fixed top potision, Please call this function in scrollViewDidScroll
     public func fixedPullToRefreshViewForDidScroll() {
         if PullToRefreshConst.fixedTop {
