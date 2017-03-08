@@ -21,12 +21,17 @@ public extension UIScrollView {
     }
     
     public func addPullToRefresh(options options: PullToRefreshOption = PullToRefreshOption(), refreshCompletion :(() -> ())) {
+        removePullToRefresh()
         let refreshViewFrame = CGRectMake(0, -PullToRefreshConst.height, self.frame.size.width, PullToRefreshConst.height)
         let refreshView = PullToRefreshView(options: options, frame: refreshViewFrame, refreshCompletion: refreshCompletion)
         refreshView.tag = PullToRefreshConst.tag
         addSubview(refreshView)
     }
-
+    
+    public func removePullToRefresh() {
+        pullToRefreshView?.removeFromSuperview()
+    }
+    
     public func startPullToRefresh() {
         pullToRefreshView?.state = .Refreshing
     }
