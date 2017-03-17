@@ -9,20 +9,20 @@ import UIKit
 
 public extension UIScrollView {
     
-    private var pullToRefreshView: PullToRefreshView? {
+    fileprivate var pullToRefreshView: PullToRefreshView? {
         get {
             let pullToRefreshView = viewWithTag(PullToRefreshConst.tag)
             return pullToRefreshView as? PullToRefreshView
         }
     }
 
-    public func addPullToRefresh(refreshCompletion :(() -> ())) {
+    public func addPullToRefresh(_ refreshCompletion :@escaping (() -> ())) {
         self.addPullToRefresh(options: PullToRefreshOption(), refreshCompletion: refreshCompletion)
     }
     
-    public func addPullToRefresh(options options: PullToRefreshOption = PullToRefreshOption(), refreshCompletion :(() -> ())) {
+    public func addPullToRefresh(options: PullToRefreshOption = PullToRefreshOption(), refreshCompletion :@escaping (() -> ())) {
         removePullToRefresh()
-        let refreshViewFrame = CGRectMake(0, -PullToRefreshConst.height, self.frame.size.width, PullToRefreshConst.height)
+        let refreshViewFrame = CGRect(x: 0, y: -PullToRefreshConst.height, width: self.frame.size.width, height: PullToRefreshConst.height)
         let refreshView = PullToRefreshView(options: options, frame: refreshViewFrame, refreshCompletion: refreshCompletion)
         refreshView.tag = PullToRefreshConst.tag
         addSubview(refreshView)
@@ -33,14 +33,14 @@ public extension UIScrollView {
     }
     
     public func startPullToRefresh() {
-        pullToRefreshView?.state = .Refreshing
+        pullToRefreshView?.state = .refreshing
     }
     
     public func stopPullToRefresh() {
-        pullToRefreshView?.state = .Normal
+        pullToRefreshView?.state = .normal
     }
     
-    public func enablePullRefresh(enable: Bool) {
+    public func enablePullRefresh(_ enable: Bool) {
         pullToRefreshView?.enable = enable
     }
     
